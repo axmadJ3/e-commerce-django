@@ -1,9 +1,12 @@
 from django.shortcuts import render
 
+from apps.products.models import Categories
 
 def index(request):
+    categories = Categories.objects.all()
     context = {
         'title': 'HOME - Главная',
+        'categories': categories,
     }
     
     return render(request, template_name='main\index.html', context=context)

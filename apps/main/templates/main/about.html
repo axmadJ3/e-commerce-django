@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block CSS %}
+    <link rel="stylesheet" href=" {% static "css/my_footer_css.css" %} ">
+{% endblock CSS %}
+
 {% block content %}
 
 <div class="container">
@@ -10,14 +16,9 @@
         <div class="col-lg-10">
             <!-- Контент на странице -->
             <h1 class="mt-5 pt-5"><strong>О нас</strong></h1>
-            <p class="mt-2 pt-2">{{ text_on_page }}</p>
+            <p class="mt-2 pt-4">{{ text_on_page }}</p>
         </div>
     </div>
 </div>
-<footer class="py-1 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
-    </div>
-</footer>
 
 {% endblock content %}

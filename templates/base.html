@@ -10,7 +10,9 @@
     <link rel="stylesheet" href=" {% static "css/bootstrap/bootstrap.min.css" %} ">
     <link rel="stylesheet" href=" {% static "css/my_css.css" %} ">
     <!-- Стиль footer-a для главной страницы -->
-    <link rel="stylesheet" href=" {% static "css/my_footer_css.css" %} ">
+    {% block css %}
+    
+    {% endblock css %}
     <!-- Favicons for different platforms -->
     <link rel="apple-touch-icon" sizes="180x180" href=" {% static "favicon/apple-touch-icon.png" %} ">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static "favicon/favicon-32x32.png" %} ">
@@ -63,7 +65,7 @@
                                 </li>
                                 <li><a class="dropdown-item  text-white" href="#">Выйти</a></li>
                             </ul>
-                        </li>
+                        </li>   
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -86,14 +88,11 @@
                             height="16">
                     </button>
                     <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Все товары</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Кухня</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Спальня</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Гостинная</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Офис</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Фурнитура</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">Декор</a></li>
+                        {% for category in categories %}
+                        <li><a class="dropdown-item text-white" href="{% url "catalog:catalog" %}">{{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
+                    
                 </div>
                 <!-- Значек корзины, вызывает модальное окно -->
                 <div>

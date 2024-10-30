@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Categories(models.Model):
@@ -30,7 +31,7 @@ class Products(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
-    
+
     def __str__(self) -> str:
         return self.name
     

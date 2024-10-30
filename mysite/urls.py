@@ -17,8 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from debug_toolbar.toolbar import debug_toolbar_urls
+
+from mysite.settings import DEBUG
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("apps.main.urls", namespace='main')),
     path('catalog/', include("apps.products.urls", namespace='catalog')),
-]
+] 
+
+if DEBUG:
+    urlpatterns += debug_toolbar_urls()
+    

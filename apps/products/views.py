@@ -14,6 +14,15 @@ def catalog(request):
     return render(request, template_name='products/catalog.html', context=context)
 
 
-def product(request):
-    return render(request, template_name='products/product.html')
+def product(request, product_slug):
+    try:
+        product = Products.objects.get(slug=product_slug)
+    except Exception as e:
+        return e
+    
+    context = {
+        'product': product,
+    }
+    
+    return render(request, template_name='products/product.html', context=context)
  

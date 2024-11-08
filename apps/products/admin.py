@@ -13,4 +13,4 @@ class CategoriesAdmin(admin.ModelAdmin):
 class ProductsAdmin(admin.ModelAdmin):
     list_display = ['name', 'category']
     prepopulated_fields = {'slug': ('name', )}
-    readonly_fields = ['slug']
+    # readonly_fields = ['slug']

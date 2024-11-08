@@ -57,6 +57,14 @@
                         </form>
                     </div>
                     <!-- Карта товара -->
+
+                    {% if request.GET.q %}
+                    <h3 class="mt-4">Результаты поиска по запросу "{{ request.GET.q }}"</h3>
+                    {% if not products %}
+                        <h2 class="mt-4">По запросу ничего не найдено</h2>
+                    {% endif %}
+                    {% endif %}
+
                      {% for product in products %}
                     <div class="col-lg-4 col-md-6 p-4">
                         <div class="card border-primary rounded custom-shadow">
@@ -67,9 +75,27 @@
                             {% endif %}
                             <div class="card-body">
                                 <a href="{% url 'catalog:product-detail' product.slug %}">
-                                    <p class="card-title">{{ product.name }}</p>
+                                    {% autoescape off %}
+                                        <p class="card-title"> 
+                                            {% if  product.headline %} 
+                                                {{ product.headline }} 
+                                            {% else %} 
+                                                {{ product.name }} 
+                                            {% endif %} 
+                                        </p>
+                                    {% endautoescape %}
                                 </a>
-                                <p class="card-text text-truncate">{{ product.description }}</p>
+                                <p class="card-text text-truncate">
+                                    {% autoescape off %}
+                                        <p class="card-title"> 
+                                            {% if  product.bodyline %} 
+                                                {{ product.bodyline }} 
+                                            {% else %} 
+                                                {{ product.description }}
+                                            {% endif %} 
+                                        </p>
+                                    {% endautoescape %}
+                                </p>
                                 <p class="product_id">id: {{ product.display_id }}</p>
                                 <div class="d-flex justify-content-between">
                                     {% if product.discount %}
@@ -90,33 +116,35 @@
                     {% endfor %}
                 </div>
                 <!-- Пагинация -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center my-4">
-                        <div class="custom-shadow d-flex">
+                {% if products %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center my-4">
+                            <div class="custom-shadow d-flex">
 
-                            <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
-                                <a class="page-link" href="{% if products.has_previous %}?{% tag_products page=products.previous_page_number %}{% endif %}">
-                                    Предыдущий
-                                </a>
-                            </li>
-                            
-                            {% for page in products.paginator.page_range %}
-                                {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
-                                    <li class="page-item {% if page == products.number %} active {% endif %}">
-                                        <a class="page-link" href="?{% tag_products page=page %}">{{ page }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            
-                            <li class="page-item {% if not products.has_next %} disabled {% endif %}">
-                                <a class="page-link" href="{% if products.has_next %}?{% tag_products page=products.next_page_number %}{% endif %}">
-                                    Следующий
-                                </a>
-                            </li>                            
-                            
-                        </div>
-                    </ul>
-                </nav>
+                                <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
+                                    <a class="page-link" href="{% if products.has_previous %}?{% tag_products page=products.previous_page_number %}{% endif %}">
+                                        Предыдущий
+                                    </a>
+                                </li>
+                                
+                                {% for page in products.paginator.page_range %}
+                                    {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
+                                        <li class="page-item {% if page == products.number %} active {% endif %}">
+                                            <a class="page-link" href="?{% tag_products page=page %}">{{ page }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+                                    <a class="page-link" href="{% if products.has_next %}?{% tag_products page=products.next_page_number %}{% endif %}">
+                                        Следующий
+                                    </a>
+                                </li>                            
+                                
+                            </div>
+                        </ul>
+                    </nav>
+                {% endif %}
             </div>
         </div>
     </div>

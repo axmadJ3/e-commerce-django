@@ -85,13 +85,13 @@
                                         </p>
                                     {% endautoescape %}
                                 </a>
-                                <p class="card-text text-truncate">
+                                <p class="card-text ">
                                     {% autoescape off %}
                                         <p class="card-title"> 
                                             {% if  product.bodyline %} 
-                                                {{ product.bodyline }} 
+                                                {{ product.bodyline|truncatechars:100 }} 
                                             {% else %} 
-                                                {{ product.description }}
+                                                {{ product.description|truncatechars:35 }}
                                             {% endif %} 
                                         </p>
                                     {% endautoescape %}

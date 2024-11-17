@@ -173,12 +173,25 @@
             </div>
         </div>
 
-        {% block content%} 
-        
-        {% endblock content%}
-    
-    </section>
+            <!-- Контент -->
+        <div class="container">
+            <div class="row mt-1">
+                <div class="col-lg-2">
+                    <!-- Пустой блок на Ваше усмотрение -->
+                </div>
+                <div class="col-lg-10">
+                    <!-- Контент на странице -->
+                    
+                    {% include "includes/non_field_errors.html" %}
+                    {% block content%} {% endblock content%}
 
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    
+    
     <script src=" {% static "js/jquery/jquery-3.7.0.min.js" %} "></script>
     <script src=" {% static "js/jquery-events.js" %} "></script>
     <script src=" {% static "js/jquery-ajax.js" %} "></script>

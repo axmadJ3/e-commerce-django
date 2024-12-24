@@ -4,16 +4,21 @@ from apps.carts.models import Cart
 from apps.products.models import Products
 
 def cart_add(request, product_slug):
-    product = Products.objects.get(slug=product_slug)
+    try:
+        product = Products.objects.get(slug=product_slug)
+    except Products.DoesNotExist:
+        return redirect(request.META['HTTP_REFERER'])
     
     if request.user.is_authenticated:
-        carts = Cart.objects.filter(user=request.user, product=product).first()
+        carts = Cart.objects.filter(user=request.user, product=product)
         
         if carts.exists():
-            cart.quantity += 1
-            cart.save()
-    else:
-        cart = Cart.object.create(user=request.user, product=product, quantity=1)
+            cart = carts.first()
+            if cart:
+                cart.quantity += 1
+                cart.save()
+        else:
+            Cart.objects.create(user=request.user, product=product, quantity=1)
     
     return redirect(request.META['HTTP_REFERER'])
 

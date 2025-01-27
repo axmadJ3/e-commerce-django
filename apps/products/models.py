@@ -45,3 +45,6 @@ class Products(models.Model):
         
         return self.price
     
+    def get_absolute_url(self):
+        return reverse("catalog:product-detail", kwargs={"product_slug": self.slug})
+    

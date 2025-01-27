@@ -5,12 +5,24 @@ from .models import Products, Categories
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
-    # readonly_fields = ['slug']
-    
+    list_display = ['name', ]
     prepopulated_fields = {'slug': ('name', )}
+
 
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category']
+    list_display = ['name', 'quantity', 'price', 'discount']
+    list_editable = ['discount', ]
+    search_fields = ['name', 'description']
+    list_filter = ['discount', 'price', 'category']
     prepopulated_fields = {'slug': ('name', )}
-    # readonly_fields = ['slug']
+    fields = [
+        'name',
+        'category',
+        'slug',
+        'description',
+        'image',
+        ('price', 'discount'),
+        'quantity',
+    ]
+    

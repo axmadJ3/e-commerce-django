@@ -29,6 +29,7 @@ urlpatterns = [
     path('catalog/', include("apps.products.urls", namespace='catalog')),
     path('user/', include("apps.users.urls", namespace='user')),
     path('cart/', include("apps.carts.urls", namespace='cart')),
+    path('orders/', include("apps.orders.urls", namespace='orders')),
 ] 
 
 if DEBUG:

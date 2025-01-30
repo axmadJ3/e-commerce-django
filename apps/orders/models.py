@@ -19,8 +19,8 @@ class Order(models.Model):
                              default=None, verbose_name='Пользователь')
     created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания заказа')
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
-    required_delivery = models.DateTimeField(default=False, verbose_name='Дата и время доставки')
-    delivery_address = models.CharField(blank=True, null=True, verbose_name='Адрес доставки')
+    requires_delivery = models.BooleanField(default=False, verbose_name='Требуется доставка')
+    delivery_address = models.TextField(blank=True, null=True, verbose_name='Адрес доставки')
     payment_on_get = models.BooleanField(default=False, verbose_name='Оплата при получении')
     is_paid = models.BooleanField(default=False, verbose_name='Оплачен')
     status = models.CharField(max_length=20, default='В обработке',verbose_name='Статус заказа')
@@ -46,8 +46,8 @@ class OrderItem(models.Model):
     
     class Meta:
         db_table = 'order_item'
-        verbose_name = 'Проданный заказа'
-        verbose_name_plural = 'Проданные заказов'
+        verbose_name = 'Проданный товар'
+        verbose_name_plural = 'Проданные товары'
     
     def products_price(self):
         return round(self.price * self.quantity, 2)

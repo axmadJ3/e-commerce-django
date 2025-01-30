@@ -1,11 +1,78 @@
-from django.forms import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-
-from apps.users.models import User
+from django import forms
 
 
-class UserLoginForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ('username', 'password')
-        
+class CreateOrderForm(forms.Form):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    phone_number = forms.CharField()
+    requires_delivery = forms.ChoiceField(
+        choices = [
+             ('1', True),
+             ('0', False),
+         ],
+    )
+    delivery_address = forms.CharField(required=False)
+    payment_on_get = forms.ChoiceField(
+        choices = [
+            ('1', True), 
+            ('0', False),
+            ],
+        )
+    
+    # firs_name = forms.Charfield(
+    #     widge = forms.TextInput(
+    #         attrs = {
+    #             'class': 'form-control',
+    #             'placeholder': 'Введите ваше имя',
+    #             }
+    #         ),
+    # )
+    
+    # last_name = forms.Charfield(
+    #     widge = forms.TextInput(
+    #         attrs = {
+    #             'class': 'form-control',
+    #             'placeholder': 'Введите вашу фамилию',
+    #         }
+    #     ),
+    # )
+    
+    # phone_number = forms.Charfield(
+    #     widge = forms.TextInput(
+    #         attrs = {
+    #             'class': 'form-control',
+    #             'placeholder': 'Введите ваш номер телефона',
+    #         }
+    #     ),
+    # )
+    
+    # requires_delivery = forms.ChoiseField(
+    #     widge = forms.RadioSelect(),
+    #     choices = [
+    #         ('1', True),
+    #         ('0', False),
+    #     ],
+    #     initial = 0,
+    # )
+    
+    # delivery_address = forms.Charfield(
+    #     widge=forms.TextInput(
+    #         attrs = {
+    #             'class': 'form-control',
+    #             'id': 'delivery_address',
+    #             'rows': 2,
+    #             'placeholder': 'Введите ваш адрес доставки',
+    #         }   
+    #     ),
+    #     required = False,
+    # )
+    
+    # payment_on_get = forms.ChoiseField(
+    #     widget = forms.RadioSelect(),
+    #     choices = [
+    #         ('1', True),
+    #         ('0', False),
+    #     ],
+    #     initial = 'card',
+    # ) 
+    

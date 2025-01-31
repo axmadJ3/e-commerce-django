@@ -21,15 +21,19 @@ class CreateOrderForm(forms.Form):
         )
     
     def clean_phone_number(self):
-        date = self.cleaned_data.get['phone_number']
-        if not date.isdigit():
-            raise forms.ValidationError('Телефон должен содержать только цифры')
+        data = self.cleaned_data['phone_number']
+
+        # Remove spaces, dashes, and parentheses
+        data = re.sub(r'[ \-()]+', '', data)
+
+        if not data.isdigit():
+            raise forms.ValidationError("Номер телефона должен содержать только цифры")
         
         pattern = re.compile(r'^\d{10}$')
-        if not pattern.match(date):
-            raise forms.ValidationError('Телефон должен содержать 10 цифр')    
+        if not pattern.match(data):
+            raise forms.ValidationError("Неверный формат номера")
 
-        return date
+        return data
     
     
     # firs_name = forms.Charfield(

@@ -1,4 +1,5 @@
 from django import forms
+import re
 
 
 class CreateOrderForm(forms.Form):
@@ -18,6 +19,18 @@ class CreateOrderForm(forms.Form):
             ('0', False),
             ],
         )
+    
+    def clean_phone_number(self):
+        date = self.cleaned_data.get['phone_number']
+        if not date.isdigit():
+            raise forms.ValidationError('Телефон должен содержать только цифры')
+        
+        pattern = re.compile(r'^\d{10}$')
+        if not pattern.match(date):
+            raise forms.ValidationError('Телефон должен содержать 10 цифр')    
+
+        return date
+    
     
     # firs_name = forms.Charfield(
     #     widge = forms.TextInput(

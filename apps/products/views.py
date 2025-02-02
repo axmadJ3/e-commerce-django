@@ -6,10 +6,12 @@ from .utils import query_search
 
 
 class CatalogView(ListView):
-    # model = Products
+    model = Products
+    # queryset = Products.objects.all()
     template_name = 'products/catalog.html'
     context_object_name = 'products'
     paginate_by = 6
+    allow_empty = True
     
     def get_queryset(self):
         category_slug = self.kwargs.get('category_slug')
@@ -18,12 +20,11 @@ class CatalogView(ListView):
         query = self.request.GET.get('q')
         
         if category_slug == 'all':
-            products = Products.objects.all()
+            products = super().get_queryset()
         elif query:
             products = query_search(query)
         else:
-            products = Products.objects.filter(category__slug=category_slug)
-            
+            products = super().get_queryset().filter(category__slug=category_slug)
             if not products.exists():
                 raise Http404()
 

@@ -1,8 +1,8 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404
 
-from .models import Products
-from .utils import query_search
+from apps.products.models import Products
+from apps.products.utils import query_search
 
 
 class CatalogView(ListView):

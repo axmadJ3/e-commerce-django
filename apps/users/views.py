@@ -9,7 +9,7 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Prefetch
 
 from apps.carts.models import Cart
-from .forms import UserLoginForm, UserRegistrationForm, ProfileChangeForm
+from apps.users.forms import UserLoginForm, UserRegistrationForm, ProfileChangeForm
 from apps.orders.models import Order, OrderItem
 
 

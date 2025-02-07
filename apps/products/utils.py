@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank, SearchHeadline
 
-from .models import Products
+from apps.products.models import Products
 
 def query_search(query):
     if query.isdigit() and len(query) <= 5:

@@ -27,7 +27,6 @@ class CreateOrderView(LoginRequiredMixin, FormView):
             with transaction.atomic():
                 user = self.request.user
                 cart_items = Cart.objects.filter(user=user)
-                
                 if cart_items.exists():
                     # создать заказ
                     order = Order.objects.create(
@@ -43,10 +42,9 @@ class CreateOrderView(LoginRequiredMixin, FormView):
                         name = cart_item.product.name
                         price = cart_item.product.sell_price()
                         quantity = cart_item.quantity
-                        
                         if product.quantity < quantity:
-                            raise ValidationError(f'Недостаточно количество товара {name} на складе\
-                                В наличии - {product.quantity}')
+                            messages.error(self.request, f'Недостаточно товара {name} на складе. В наличии - {product.quantity}')
+                            return redirect('orders:create-order')
                             
                         OrderItem.objects.create(
                             order = order,
@@ -57,10 +55,9 @@ class CreateOrderView(LoginRequiredMixin, FormView):
                         )
                         product.quantity -= quantity
                         product.save()
-                    
+
                     # очистить корзину
                     cart_items.delete()
-                    
                     messages.success(self.request, 'Заказ успешно оформлен!')
                     return redirect('user:profile')
         
